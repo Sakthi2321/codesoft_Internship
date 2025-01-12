@@ -1,0 +1,75 @@
+//Task 4
+// Quiz Application with Timer
+import java.util.*;
+
+public class TamilNaduQuizApplication {
+    static class Question {
+        String questionText;
+        String[] options;
+        int correctAnswer;
+
+        Question(String questionText, String[] options, int correctAnswer) {
+            this.questionText = questionText;
+            this.options = options;
+            this.correctAnswer = correctAnswer;
+        }
+    }
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        // Define Tamil Nadu-related quiz questions
+        Question[] questions = {
+            new Question("What is the capital of Tamil Nadu?", 
+                new String[] {"1. Chennai", "2. Coimbatore", "3. Madurai", "4. Trichy"}, 1),
+            new Question("Which festival is famously celebrated in Tamil Nadu?", 
+                new String[] {"1. Pongal", "2. Diwali", "3. Holi", "4. Christmas"}, 1),
+            new Question("What is the official language of Tamil Nadu?", 
+                new String[] {"1. Telugu", "2. Kannada", "3. Tamil", "4. Malayalam"}, 3),
+            new Question("Which is the tallest waterfall in Tamil Nadu?", 
+                new String[] {"1. Hogenakkal", "2. Thalaiyar", "3. Courtallam", "4. Siruvani"}, 2),
+            new Question("Which city in Tamil Nadu is known as the 'Manchester of South India'?", 
+                new String[] {"1. Chennai", "2. Madurai", "3. Coimbatore", "4. Salem"}, 3)
+        };
+
+        int score = 0;
+
+        // Quiz logic
+        System.out.println("Welcome to the Tamil Nadu Quiz!");
+        System.out.println("You have 10 seconds to answer each question. Good luck!\n");
+
+        for (int i = 0; i < questions.length; i++) {
+            Question q = questions[i];
+            System.out.println("Question " + (i + 1) + ": " + q.questionText);
+            for (String option : q.options) {
+                System.out.println(option);
+            }
+
+            // Timer setup for 10 seconds per question
+            final long startTime = System.currentTimeMillis();
+            int userAnswer = -1;
+
+            while (System.currentTimeMillis() - startTime < 10000 && userAnswer == -1) {
+                System.out.print("Enter your answer (1-4): ");
+                if (scanner.hasNextInt()) {
+                    userAnswer = scanner.nextInt();
+                }
+            }
+
+            // If time runs out, move to the next question
+            if (userAnswer == -1) {
+                System.out.println("\nTime's up! Moving to the next question.");
+            }
+
+            // Check if the answer is correct
+            if (userAnswer == q.correctAnswer) {
+                score++;
+            }
+            System.out.println();
+        }
+
+        // Display results
+        System.out.println("Quiz Over!");
+        System.out.println("Your final score is: " + score + "/" + questions.length);
+    }
+}
